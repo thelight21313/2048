@@ -110,7 +110,3 @@ while True:
     if matrix.matrix_list != last_matrix:
         matrix.spawn()
         matrix.print_matrix()
-    if key and last_matrix != matrix:
-        matrix.spawn()
-    elif key == readchar.key.ESC:
-        break
