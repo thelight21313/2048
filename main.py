@@ -29,11 +29,10 @@ class Matrix:
     def turn(self, rotate_count):
         for i in range(rotate_count):
             self.matrix_list = [list(x) for x in zip(*self.matrix_list[::-1])]
-        return self.matrix_list
 
 
     def rotate_matrix(self, rotate_count):
-        self.matrix_list = self.turn(rotate_count)
+        self.turn(rotate_count)
         return self
 
     @staticmethod
@@ -43,7 +42,8 @@ class Matrix:
 
     def move_row_left(self, array):
         array = self.delete_zeroes(array)
-        for el in range(len(array), 1, -1):
+        result_array = []
+        for el in range(len(array)-1, 0, -1):
             if array[el] == array[el - 1]:
                 array[el] *= 2
                 array[el - 1] = 0
@@ -53,7 +53,7 @@ class Matrix:
 
     def move(self):
         self.matrix_list = [self.move_row_left(row) for row in self.matrix_list]
-        return self.matrix_list
+        return self
 
     def print_matrix(self):
         for _ in self.matrix_list:
@@ -92,7 +92,7 @@ print(start_list)
 while True:
     key = readchar.readkey()
     if key:
-        last_matrix = matrix
+        last_matrix = [[r] for r in matrix.matrix_list]
     if key == 'w':
         up.click(matrix)
         matrix.print_matrix()
