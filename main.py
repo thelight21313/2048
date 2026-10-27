@@ -42,11 +42,16 @@ class Matrix:
 
     def move_row_left(self, array):
         array = self.delete_zeroes(array)
-        result_array = []
-        for el in range(len(array)-1, 0, -1):
-            if array[el] == array[el - 1]:
-                array[el] *= 2
-                array[el - 1] = 0
+        result = []
+        i = 0
+        while i < len(array):
+            if i + 1 < len(array) and array[i] == array[i + 1]:
+                result.append(array[i] * 2)
+                i += 2
+            else:
+                result.append(array[i])
+                i += 1
+        array = result
         array = self.delete_zeroes(array)
         array += [0] * (4-len(array))
         return array
@@ -88,22 +93,22 @@ right = Button(button="right", vector=right_vector)
 start_list = [[0] * 4 for _ in range(4)]
 matrix = Matrix(start_list)
 matrix.spawn()
-print(start_list)
+matrix.print_matrix()
 while True:
     key = readchar.readkey()
-    if key:
-        last_matrix = [[r] for r in matrix.matrix_list]
+    last_matrix = [row[:] for row in matrix.matrix_list]
     if key == 'w':
         up.click(matrix)
-        matrix.print_matrix()
     if key == 's':
         down.click(matrix)
-        matrix.print_matrix()
     if key == 'a':
         left.click(matrix)
-        matrix.print_matrix()
     if key == 'd':
         right.click(matrix)
+        
+    matrix.print_matrix()
+    if matrix.matrix_list != last_matrix:
+        matrix.spawn()
         matrix.print_matrix()
     if key and last_matrix != matrix:
         matrix.spawn()
